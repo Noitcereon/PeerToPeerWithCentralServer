@@ -15,12 +15,11 @@ namespace RegistryServerREST.Controllers
     {
         
         private FileEndPointsManager manager = new FileEndPointsManager();
-        [HttpGet("{fileName}")]
 
+        [HttpGet("{fileName}")]
         public string GetAllPeers(string fileName)
         {
             return manager.GetAll(fileName);
-
         }
 
 
