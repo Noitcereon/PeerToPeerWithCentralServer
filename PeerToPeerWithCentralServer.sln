@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegistryServerREST", "RegistryServerREST\RegistryServerREST.csproj", "{7435A325-04E8-48BF-842F-BE3F064E830E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RegistryServerREST", "RegistryServerREST\RegistryServerREST.csproj", "{7435A325-04E8-48BF-842F-BE3F064E830E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeerToPeerLib", "PeerToPeerLib\PeerToPeerLib.csproj", "{2D5481BA-4B3B-44FF-A64C-6AAAAA6F103A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeerToPeerLib", "PeerToPeerLib\PeerToPeerLib.csproj", "{2D5481BA-4B3B-44FF-A64C-6AAAAA6F103A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegistryServerTesting", "RegistryServerTesting\RegistryServerTesting.csproj", "{5463CD99-433D-4A1F-917B-A53F557FA593}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{2D5481BA-4B3B-44FF-A64C-6AAAAA6F103A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D5481BA-4B3B-44FF-A64C-6AAAAA6F103A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D5481BA-4B3B-44FF-A64C-6AAAAA6F103A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5463CD99-433D-4A1F-917B-A53F557FA593}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5463CD99-433D-4A1F-917B-A53F557FA593}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5463CD99-433D-4A1F-917B-A53F557FA593}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5463CD99-433D-4A1F-917B-A53F557FA593}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
