@@ -10,9 +10,14 @@ namespace RegistryServerREST.Controllers
     [Route("api/powernap/")]
     public class FileEndPointsController : ControllerBase
     {
+        private List<FileEndPoint> test = new List<FileEndPoint>
+        {
+            new FileEndPoint("123.")
+        };
         public string GetAllPeers()
         {
-            throw new NotImplementedException();
+            
+            
         }
     }
 }

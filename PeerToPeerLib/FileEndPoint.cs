@@ -6,8 +6,25 @@ namespace PeerToPeerLib
 {
     public class FileEndPoint
     {
-        // string: IP Address
-        // int: port number
-        public Dictionary<string, int> EndPoints { get; set; }
+        private string _ipAddress;
+        public string IpAddress { get; set; }
+
+        private int _portNo;
+        public int PortNo { get; set; }
+
+        
+
+        public FileEndPoint()
+        {
+            
+        }
+
+        public FileEndPoint(string ip, int portNo)
+        {
+            IpAddress = ip;
+            portNo = portNo;
+        }
+
+        
     }
 }

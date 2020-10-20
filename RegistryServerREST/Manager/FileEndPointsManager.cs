@@ -7,5 +7,6 @@ namespace RegistryServerREST.Manager
 {
     public class FileEndPointsManager
     {
+
     }
 }
