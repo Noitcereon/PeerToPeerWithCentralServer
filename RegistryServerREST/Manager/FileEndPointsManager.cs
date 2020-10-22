@@ -41,7 +41,22 @@ namespace RegistryServerREST.Manager
 
         public int Register(string fileName)
         {
-            throw new NotImplementedException();
+            if (_endPointsByFile.ContainsKey(fileName))
+            {
+                return 0; // 0 = fileName already exists
+            }
+
+            try
+            {
+                throw new NotImplementedException();
+
+                return 1; // 1 = successfully addded
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return -1; // -1 = error
+            }
         }
 
         public int Deregister()
