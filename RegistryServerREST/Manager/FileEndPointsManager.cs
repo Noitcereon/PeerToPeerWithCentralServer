@@ -9,20 +9,27 @@ namespace RegistryServerREST.Manager
 {
     public class FileEndPointsManager
     {
-        private List<FileEndPoint> fileEndPoints = new List<FileEndPoint>
-        {
-            new FileEndPoint("123.3.15.312", 4646, true),
-            new FileEndPoint("123.32.51.1", 4000, true)
-        };
+        private Dictionary<string, List<FileEndPoint>> _endPointsByFile = 
+            new Dictionary<string, List<FileEndPoint>>() { 
+                {"fileName", new List<FileEndPoint>()
+                {
+                    new FileEndPoint("126.5.235.50", 4340)
+                }},
+                {"anotherFile", new List<FileEndPoint>()
+                {
+                    new FileEndPoint("129.53.2.513", 1234)
+                }}
+            };
+
         public string GetAll(string fileName)
         {
             List<FileEndPoint> output = new List<FileEndPoint>();
 
-            foreach (var fileEndPoint in fileEndPoints)
+            if (_endPointsByFile.ContainsKey(fileName))
             {
-                if (fileEndPoint.FilesInEndPoint.ContainsKey(fileName))
+                foreach (var fileEndPoint in _endPointsByFile.Values)
                 {
-                    output.Add(fileEndPoint);
+                    
                 }
             }
 
@@ -31,18 +38,18 @@ namespace RegistryServerREST.Manager
             return serializedOutput;
         }
 
-        public int Register(string fileName)
-        {
-            foreach (var fileEndPoint in fileEndPoints)
-            {
-                if (fileEndPoint.FilesInEndPoint.ContainsKey(fileName))
-                {
-                    return 0;
-                }
+        //public int Register(string fileName)
+        //{
+        //    foreach (var fileEndPoint in fileEndPoints)
+        //    {
+        //        if (fileEndPoint.FilesInEndPoint.ContainsKey(fileName))
+        //        {
+        //            return 0;
+        //        }
                 
-            }
-            fileEndPoints.Add(new FileEndPoint());
+        //    }
+        //    fileEndPoints.Add(new FileEndPoint());
             
-        }
+        //}
     }
 }
