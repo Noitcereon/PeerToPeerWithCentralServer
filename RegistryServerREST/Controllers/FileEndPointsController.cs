@@ -14,18 +14,18 @@ namespace RegistryServerREST.Controllers
     public class FileEndPointsController : ControllerBase
     {
         
-        private FileEndPointsManager manager = new FileEndPointsManager();
+        private readonly FileEndPointsManager _manager = new FileEndPointsManager();
 
         [HttpGet("{fileName}")]
-        public string GetAllPeers(string fileName)
+        public string GetEndPointsThatHasFile(string fileName)
         {
-            return manager.GetAll(fileName);
+            return _manager.GetEndPointsThatHasFile(fileName);
         }
 
         [HttpPost("{fileName}")]
-        public int Register()
+        public int Register([FromBody] string fileName)
         {
-
+            return _manager.Register(fileName);
         }
 
     }

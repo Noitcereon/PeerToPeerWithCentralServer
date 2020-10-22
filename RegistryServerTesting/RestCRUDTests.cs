@@ -23,7 +23,7 @@ namespace RegistryServerTesting
             //Arrange
             int expectedCount = 2;
             List<FileEndPoint> endPoints =
-            JsonSerializer.Deserialize<List<FileEndPoint>>(_manager.GetAll("fileName"));
+            JsonSerializer.Deserialize<List<FileEndPoint>>(_manager.GetEndPointsThatHasFile("testFile"));
 
             //Act  
             int actualCount = endPoints.Count;

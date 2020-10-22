@@ -9,11 +9,12 @@ namespace RegistryServerREST.Manager
 {
     public class FileEndPointsManager
     {
-        private Dictionary<string, List<FileEndPoint>> _endPointsByFile = 
-            new Dictionary<string, List<FileEndPoint>>() { 
-                {"fileName", new List<FileEndPoint>()
+        private Dictionary<string, List<FileEndPoint>> _endPointsByFile =
+            new Dictionary<string, List<FileEndPoint>>() {
+                {"testFile", new List<FileEndPoint>()
                 {
-                    new FileEndPoint("126.5.235.50", 4340)
+                    new FileEndPoint("126.5.235.50", 4340),
+                    new FileEndPoint("525.519.82.1", 9993)
                 }},
                 {"anotherFile", new List<FileEndPoint>()
                 {
@@ -21,35 +22,31 @@ namespace RegistryServerREST.Manager
                 }}
             };
 
-        public string GetAll(string fileName)
+        public string GetEndPointsThatHasFile(string fileName)
         {
-            List<FileEndPoint> output = new List<FileEndPoint>();
 
             if (_endPointsByFile.ContainsKey(fileName))
             {
-                foreach (var fileEndPoint in _endPointsByFile.Values)
-                {
-                    
-                }
+                _endPointsByFile.TryGetValue(fileName, out List<FileEndPoint> output);
+
+                string serializedOutput = JsonSerializer.Serialize(output);
+
+                return serializedOutput;
             }
-
-            string serializedOutput = JsonSerializer.Serialize(output);
-
-            return serializedOutput;
+            else
+            {
+                return "No endpoints have that file.";
+            }
         }
 
-        //public int Register(string fileName)
-        //{
-        //    foreach (var fileEndPoint in fileEndPoints)
-        //    {
-        //        if (fileEndPoint.FilesInEndPoint.ContainsKey(fileName))
-        //        {
-        //            return 0;
-        //        }
-                
-        //    }
-        //    fileEndPoints.Add(new FileEndPoint());
-            
-        //}
+        public int Register(string fileName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Deregister()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
