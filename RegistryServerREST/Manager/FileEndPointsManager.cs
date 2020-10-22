@@ -30,5 +30,19 @@ namespace RegistryServerREST.Manager
 
             return serializedOutput;
         }
+
+        public int Register(string fileName)
+        {
+            foreach (var fileEndPoint in fileEndPoints)
+            {
+                if (fileEndPoint.FilesInEndPoint.ContainsKey(fileName))
+                {
+                    return 0;
+                }
+                
+            }
+            fileEndPoints.Add(new FileEndPoint());
+            
+        }
     }
 }

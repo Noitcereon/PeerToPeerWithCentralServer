@@ -22,6 +22,11 @@ namespace RegistryServerREST.Controllers
             return manager.GetAll(fileName);
         }
 
+        [HttpPost("{fileName}")]
+        public int Register()
+        {
+
+        }
 
     }
 }
