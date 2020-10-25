@@ -11,11 +11,11 @@ namespace TCPPeerServer
     public class ServerWorker
     {
         private enum ClientRequest { GetFile, UploadFile }
-        private static List<string> _filesOnServer = new List<string>();
+        //private static List<string> _filesOnServer = FileManagement.
 
-        public void Start()
+        public void Start(int port)
         {
-            TcpListener server = new TcpListener(IPAddress.Loopback, 8001);
+            TcpListener server = new TcpListener(IPAddress.Loopback, port);
             RegistryCommunication.ServerStartup();
 
             server.Start();
@@ -35,7 +35,8 @@ namespace TCPPeerServer
 
             try
             {
-                ClientRequest clientRequest = (ClientRequest)Enum.Parse(typeof(ClientRequest), sr.ReadLine() ?? throw new InvalidOperationException());
+                sw.WriteLine("Commands: GetFile, UploadFile");
+                ClientRequest clientRequest = (ClientRequest)Enum.Parse(typeof(ClientRequest), sr.ReadLine());
 
                 switch (clientRequest)
                 {
@@ -60,14 +61,15 @@ namespace TCPPeerServer
             catch (Exception e)
             {
                 sw.WriteLine("Request failed.");
-                Console.WriteLine(e);
+                Console.WriteLine(e.Message);
+                HandleClient(tempSocket);
             }
         }
 
         private static void GetFile(string fileName)
         {
             string path = @"\PeerServerFiles\" + fileName;
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         private static void LogMessage(string message)

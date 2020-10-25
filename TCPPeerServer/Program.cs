@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace TCPPeerServer
 {
@@ -7,7 +8,11 @@ namespace TCPPeerServer
         private static void Main(string[] args)
         {
             ServerWorker worker = new ServerWorker();
-            worker.Start();
+            Task.Run(() => worker.Start(8001));
+            Task.Run(() => worker.Start(8002));
+            Task.Run(() => worker.Start(8003));
+
+            Console.ReadLine(); // keeps the server running
         }
     }
 }

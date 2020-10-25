@@ -8,12 +8,12 @@ namespace TCPPeerServer
 {
     internal class FileManagement
     {
-        public List<string> GetAllFilesOnServer(string basePath)
-        {
-            List<string> output = new List<string>();
-            
-            DirectoryInfo serverFileDirectory = new DirectoryInfo(basePath);
-            serverFileDirectory.EnumerateFiles()
-        }
+        //public List<string> GetAllFilesOnServer(string basePath)
+        //{
+        //    List<string> output = new List<string>();
+
+        //    DirectoryInfo serverFileDirectory = new DirectoryInfo(basePath);
+        //    serverFileDirectory.EnumerateFiles()
+        //}
     }
 }
