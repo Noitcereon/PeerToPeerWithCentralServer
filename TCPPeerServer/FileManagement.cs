@@ -6,14 +6,22 @@ using System.Xml;
 
 namespace TCPPeerServer
 {
-    internal class FileManagement
+    public class FileManagement
     {
-        //public List<string> GetAllFilesOnServer(string basePath)
-        //{
-        //    List<string> output = new List<string>();
+        public static List<string> GetAllFilesOnServer(string rootPath)
+        {
+            List<string> output = new List<string>();
 
-        //    DirectoryInfo serverFileDirectory = new DirectoryInfo(basePath);
-        //    serverFileDirectory.EnumerateFiles()
-        //}
+            Directory.CreateDirectory(rootPath);
+            string[] files = Directory.GetFiles(rootPath);
+            output.AddRange(files);
+
+            return output;
+        }
+
+        public void GetFile(string fileName)
+        {
+
+        }
     }
 }

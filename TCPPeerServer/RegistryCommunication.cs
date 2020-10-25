@@ -4,20 +4,20 @@ using System.Text;
 
 namespace TCPPeerServer
 {
-    internal static class RegistryCommunication
+    public static class RegistryCommunication
     {
 
-        internal static void ServerStartup()
+        public static void ServerStartup(List<string> filesOnServer)
         {
             
         }
 
-        internal static void RegisterFile(string fileName)
+        public static void RegisterFile(string fileName)
         {
 
         }
 
-        internal static void DeregisterFile(string fileName)
+        public static void DeregisterFile(string fileName)
         {
 
         }
