@@ -23,9 +23,9 @@ namespace RegistryServerREST.Controllers
         }
 
         [HttpPost("{fileName}")]
-        public int Register([FromBody] string fileName)
+        public int Register([FromBody] string fileName, FileEndPoint peer)
         {
-            return _manager.Register(fileName);
+            return _manager.Register(fileName, peer);
         }
 
     }

@@ -39,17 +39,26 @@ namespace RegistryServerREST.Manager
             }
         }
 
-        public int Register(string fileName)
+        public int Register(string fileName, FileEndPoint peer)
         {
-            if (_endPointsByFile.ContainsKey(fileName))
-            {
-                return 0; // 0 = fileName already exists
-            }
-
             try
             {
-                throw new NotImplementedException();
-
+                if (_endPointsByFile.ContainsKey(fileName))
+                {
+                    _endPointsByFile.TryGetValue(fileName, out var peers);
+                    if (peers?.Contains(peer) == false)
+                    {
+                        peers.Add(peer);
+                    }
+                    else
+                    {
+                        return 0; // peer with that file already exists.
+                    }
+                }
+                else
+                {
+                    _endPointsByFile.Add(fileName, new List<FileEndPoint> { peer });
+                }
                 return 1; // 1 = successfully addded
             }
             catch (Exception e)
