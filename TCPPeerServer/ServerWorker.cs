@@ -65,7 +65,6 @@ namespace TCPPeerServer
                         // FileManagement.CreateFile(fileName) or something :thinking:
                         _filesOnServer.Add(newFileName); // only adds the name of the file, since there is no file.
                         Task.Run(() => RegistryCommunication.RegisterFileAsync(newFileName, thisPeer));
-                        
                         break;
                     case ClientRequest.List:
                         _filesOnServer.ForEach(x => sw.WriteLine(Path.GetFileName(x)));
