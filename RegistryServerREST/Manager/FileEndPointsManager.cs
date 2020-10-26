@@ -24,7 +24,6 @@ namespace RegistryServerREST.Manager
 
         public string GetEndPointsThatHasFile(string fileName)
         {
-
             if (_endPointsByFile.ContainsKey(fileName))
             {
                 _endPointsByFile.TryGetValue(fileName, out List<FileEndPoint> output);
@@ -49,6 +48,7 @@ namespace RegistryServerREST.Manager
                     if (peers?.Contains(peer) == false)
                     {
                         peers.Add(peer);
+                        return 1; // 1 = successfully addded
                     }
                     else
                     {
@@ -58,8 +58,8 @@ namespace RegistryServerREST.Manager
                 else
                 {
                     _endPointsByFile.Add(fileName, new List<FileEndPoint> { peer });
+                    return 1; // 1 = successfully addded
                 }
-                return 1; // 1 = successfully addded
             }
             catch (Exception e)
             {
@@ -68,9 +68,16 @@ namespace RegistryServerREST.Manager
             }
         }
 
-        public int Deregister()
+        public int Deregister(string fileName, FileEndPoint peer)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return 1; // success
+            }
+            catch
+            {
+                return -1; // error
+            }
         }
     }
 }

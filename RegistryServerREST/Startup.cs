@@ -34,7 +34,7 @@ namespace RegistryServerREST
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseRouting();
 
             app.UseAuthorization();
