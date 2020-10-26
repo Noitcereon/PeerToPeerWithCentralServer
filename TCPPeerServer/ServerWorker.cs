@@ -19,8 +19,7 @@ namespace TCPPeerServer
         {
             TcpListener server = new TcpListener(IPAddress.Loopback, portNo);
             DirectoryInfo dirInfo = new DirectoryInfo(@"F:\visual_studio_projects\repos\3_semester\PeerToPeerWithCentralServer\TCPPeerServer");
-            FileManagement fm = new FileManagement();
-            _filesOnServer = fm.GetAllFilesOnServer($"{dirInfo}\\PeerServerFiles\\{portNo}");
+            _filesOnServer = FileManagement.GetAllFilesOnServer($"{dirInfo}\\PeerServerFiles\\{portNo}");
             RegistryCommunication.ServerStartup(_filesOnServer);
 
             server.Start();

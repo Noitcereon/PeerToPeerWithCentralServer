@@ -8,7 +8,7 @@ namespace TCPPeerServer
 {
     public class FileManagement
     {
-        public List<string> GetAllFilesOnServer(string rootPath)
+        public static List<string> GetAllFilesOnServer(string rootPath)
         {
             List<string> output = new List<string>();
 
