@@ -19,6 +19,8 @@ namespace TCPPeerServer
         {
             TcpListener server = new TcpListener(IPAddress.Loopback, portNo);
             DirectoryInfo dirInfo = new DirectoryInfo(@"F:\visual_studio_projects\repos\3_semester\PeerToPeerWithCentralServer\TCPPeerServer");
+            Console.WriteLine("Current directory: " + Directory.GetCurrentDirectory());
+            
             _filesOnServer = FileManagement.GetAllFilesOnServer($"{dirInfo}\\PeerServerFiles\\{portNo}");
             RegistryCommunication.ServerStartup(_filesOnServer);
 
@@ -48,10 +50,10 @@ namespace TCPPeerServer
                         sw.WriteLine("Enter name of the file you want to retrieve:");
                         string fileName = sr.ReadLine();
 
-                        GetFile(fileName);
+                        string file = FileManagement.GetFile(fileName, _filesOnServer);
                         LogMessage($"GetFile({fileName}) called");
 
-                        sw.WriteLine($"Oi, you tried to get a file named \"{fileName}\"");
+                        sw.WriteLine($"{file}");
                         break;
                     case ClientRequest.UploadFile:
 
@@ -68,14 +70,6 @@ namespace TCPPeerServer
                 Console.WriteLine(e.Message);
                 HandleClient(tempSocket);
             }
-        }
-
-        private void GetFile(string fileName)
-        {
-            //if (_filesOnServer.Contains(fileName))
-            //{
-            //    File.ReadLines()
-            //}
         }
 
         private static void LogMessage(string message)

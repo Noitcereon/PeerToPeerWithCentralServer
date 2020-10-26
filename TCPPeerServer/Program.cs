@@ -11,7 +11,7 @@ namespace TCPPeerServer
             Task.Run(() => worker.Start(8001));
             Task.Run(() => worker.Start(8002));
             Task.Run(() => worker.Start(8003));
-
+            Task.WaitAll();
             Console.ReadLine(); // keeps the server running
         }
     }

@@ -19,9 +19,23 @@ namespace TCPPeerServer
             return output;
         }
 
-        public void GetFile(string fileName)
+        /// <summary>
+        /// Returns filepath of the requested file.
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="filesOnServer"></param>
+        /// <returns></returns>
+        public static string GetFile(string fileName, List<string> filesOnServer)
         {
-
+            foreach (var filePath in filesOnServer)
+            {
+                // note: if multiple files have similar names, this only returns the first occurence.
+                if (Path.GetFileNameWithoutExtension(filePath).Contains(fileName))
+                {
+                    return filePath;
+                }
+            }
+            return "Couldn't find file.";
         }
     }
 }
