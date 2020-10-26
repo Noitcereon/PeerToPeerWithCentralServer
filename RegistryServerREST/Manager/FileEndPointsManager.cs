@@ -97,7 +97,6 @@ namespace RegistryServerREST.Manager
                 }
 
                 return 0; // nothing to delete.
-
             }
             catch (Exception e)
             {

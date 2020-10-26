@@ -20,6 +20,7 @@ namespace TCPPeerServer
         public void Start(int portNo)
         {
             TcpListener server = new TcpListener(IPAddress.Loopback, portNo);
+
             DirectoryInfo dirInfo = new DirectoryInfo(@"F:\visual_studio_projects\repos\3_semester\PeerToPeerWithCentralServer\TCPPeerServer");
             _filesOnServer = FileManagement.GetAllFilesOnServer($"{dirInfo}\\PeerServerFiles\\{portNo}");
             string serverIPAddress = server.LocalEndpoint.ToString().Split(":").First();
@@ -27,12 +28,13 @@ namespace TCPPeerServer
             Task.Run(() => RegistryCommunication.ServerStartup(_filesOnServer, thisPeer));
 
             server.Start();
-            LogMessage("Server ready", portNo);
+            SimpleLog.LogMessage("Server ready", portNo);
             while (true)
             {
                 TcpClient tempSocket = server.AcceptTcpClient();
-                LogMessage("Client connected", portNo);
+                SimpleLog.LogMessage("Client connected", portNo);
                 Task.Run(() => HandleClient(tempSocket, thisPeer));
+                SimpleLog.LogMessage("Client disconnected");
             }
         }
 
@@ -53,7 +55,7 @@ namespace TCPPeerServer
                         string fileName = sr.ReadLine();
 
                         string file = FileManagement.GetFile(fileName, _filesOnServer);
-                        LogMessage($"GetFile({fileName}) called");
+                        SimpleLog.LogMessage($"GetFile({fileName}) called");
 
                         sw.WriteLine($"{file}");
                         break;
@@ -80,15 +82,6 @@ namespace TCPPeerServer
                 Console.WriteLine($"Error thrown. Message: {e.Message}");
                 HandleClient(tempSocket, thisPeer);
             }
-        }
-
-        private static void LogMessage(string message)
-        {
-            Console.WriteLine($"{DateTime.Now:HH:mm:ss}: {message}");
-        }
-        private static void LogMessage(string message, int portNo)
-        {
-            Console.WriteLine($"{DateTime.Now:HH:mm:ss} {portNo}: {message}");
         }
     }
 }

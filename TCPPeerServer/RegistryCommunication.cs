@@ -35,10 +35,17 @@ namespace TCPPeerServer
             return response.IsSuccessStatusCode ? "Registration succeeded" : "Registration failed";
         }
 
-        public static void DeregisterFile(string fileName)
+        public static async Task<string> DeregisterFile(string fileName, FileEndPoint peer)
         {
-            // TODO: Deregister file TCP Server
-            throw new NotImplementedException("Deregister file is not implemented.");
+            // TODO: Try out DeregisterFile. Does it work?
+            using HttpClient client = new HttpClient();
+
+            string peerJson = JsonSerializer.Serialize(peer);
+            StringContent content = new StringContent(peerJson, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await client.PutAsync(RegistryBaseUrl + fileName, content);
+
+            return response.IsSuccessStatusCode ? "Deregister succeeded" : "Deregister failed";
         }
     }
 }
