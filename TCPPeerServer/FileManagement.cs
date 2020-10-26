@@ -8,7 +8,7 @@ namespace TCPPeerServer
 {
     public class FileManagement
     {
-        public static List<string> GetAllFilesOnServer(string rootPath)
+        public List<string> GetAllFilesOnServer(string rootPath)
         {
             List<string> output = new List<string>();
 
@@ -30,7 +30,7 @@ namespace TCPPeerServer
             foreach (var filePath in filesOnServer)
             {
                 // note: if multiple files have similar names, this only returns the first occurence.
-                if (Path.GetFileNameWithoutExtension(filePath).Contains(fileName))
+                if (Path.GetFileNameWithoutExtension(filePath) == (fileName))
                 {
                     return filePath;
                 }

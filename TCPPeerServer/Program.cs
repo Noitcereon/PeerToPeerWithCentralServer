@@ -9,9 +9,8 @@ namespace TCPPeerServer
         {
             ServerWorker worker = new ServerWorker();
             Task.Run(() => worker.Start(8001));
-            Task.Run(() => worker.Start(8002));
-            Task.Run(() => worker.Start(8003));
-            Task.WaitAll();
+            //Task.Run(() => worker.Start(8002));
+            //Task.Run(() => worker.Start(8003));
             Console.ReadLine(); // keeps the server running
         }
     }

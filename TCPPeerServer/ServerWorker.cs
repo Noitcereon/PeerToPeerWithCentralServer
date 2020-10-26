@@ -11,7 +11,7 @@ namespace TCPPeerServer
 {
     public class ServerWorker
     {
-        private enum ClientRequest { GetFile, UploadFile }
+        private enum ClientRequest { GetFile, UploadFile, List }
 
         private static List<string> _filesOnServer;
 
@@ -19,9 +19,8 @@ namespace TCPPeerServer
         {
             TcpListener server = new TcpListener(IPAddress.Loopback, portNo);
             DirectoryInfo dirInfo = new DirectoryInfo(@"F:\visual_studio_projects\repos\3_semester\PeerToPeerWithCentralServer\TCPPeerServer");
-            Console.WriteLine("Current directory: " + Directory.GetCurrentDirectory());
-            
-            _filesOnServer = FileManagement.GetAllFilesOnServer($"{dirInfo}\\PeerServerFiles\\{portNo}");
+            FileManagement fm = new FileManagement();
+            _filesOnServer = fm.GetAllFilesOnServer($"{dirInfo}\\PeerServerFiles\\{portNo}");
             RegistryCommunication.ServerStartup(_filesOnServer);
 
             server.Start();
@@ -29,6 +28,7 @@ namespace TCPPeerServer
             while (true)
             {
                 TcpClient tempSocket = server.AcceptTcpClient();
+                LogMessage("Client connected", portNo);
                 Task.Run(() => HandleClient(tempSocket));
             }
         }
@@ -38,10 +38,9 @@ namespace TCPPeerServer
             using NetworkStream ns = tempSocket.GetStream();
             StreamWriter sw = new StreamWriter(ns) { AutoFlush = true };
             StreamReader sr = new StreamReader(ns);
-
             try
             {
-                sw.WriteLine("Commands: GetFile, UploadFile");
+                sw.WriteLine("Commands: GetFile, UploadFile, List");
                 ClientRequest clientRequest = (ClientRequest)Enum.Parse(typeof(ClientRequest), sr.ReadLine());
 
                 switch (clientRequest)
@@ -56,7 +55,10 @@ namespace TCPPeerServer
                         sw.WriteLine($"{file}");
                         break;
                     case ClientRequest.UploadFile:
-
+                        // TODO: Upload/Register file
+                        break;
+                    case ClientRequest.List:
+                        _filesOnServer.ForEach(x => sw.WriteLine(Path.GetFileName(x)));
                         break;
 
                     default:
@@ -67,7 +69,7 @@ namespace TCPPeerServer
             catch (Exception e)
             {
                 sw.WriteLine("Request failed.");
-                Console.WriteLine(e.Message);
+                Console.WriteLine($"Error thrown. Message: {e.Message}");
                 HandleClient(tempSocket);
             }
         }
