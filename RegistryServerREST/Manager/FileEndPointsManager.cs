@@ -9,7 +9,7 @@ namespace RegistryServerREST.Manager
 {
     public class FileEndPointsManager
     {
-        private Dictionary<string, List<FileEndPoint>> _endPointsByFile =
+        private static Dictionary<string, List<FileEndPoint>> _endPointsByFile =
             new Dictionary<string, List<FileEndPoint>>() {
                 {"testFile", new List<FileEndPoint>()
                 {
@@ -24,18 +24,27 @@ namespace RegistryServerREST.Manager
 
         public string GetEndPointsThatHasFile(string fileName)
         {
-            if (_endPointsByFile.ContainsKey(fileName))
+            try
             {
-                _endPointsByFile.TryGetValue(fileName, out List<FileEndPoint> output);
+                if (_endPointsByFile.ContainsKey(fileName))
+                {
+                    _endPointsByFile.TryGetValue(fileName, out List<FileEndPoint> output);
 
-                string serializedOutput = JsonSerializer.Serialize(output);
+                    string serializedOutput = JsonSerializer.Serialize(output);
 
-                return serializedOutput;
+                    return serializedOutput;
+                }
+                else
+                {
+                    return "No endpoints have that file.";
+                }
             }
-            else
+            catch (Exception e)
             {
-                return "No endpoints have that file.";
+                Console.WriteLine(e);
+                return "An error occured during the request.";
             }
+            
         }
 
         public int Register(string fileName, FileEndPoint peer)
@@ -70,6 +79,7 @@ namespace RegistryServerREST.Manager
 
         public int Deregister(string fileName, FileEndPoint peer)
         {
+            // TODO: Deregister on REST Server.
             try
             {
                 return 1; // success
