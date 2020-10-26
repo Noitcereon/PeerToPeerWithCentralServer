@@ -44,7 +44,7 @@ namespace RegistryServerREST.Manager
                 Console.WriteLine(e);
                 return "An error occured during the request.";
             }
-            
+
         }
 
         public int Register(string fileName, FileEndPoint peer)
@@ -82,11 +82,27 @@ namespace RegistryServerREST.Manager
             // TODO: Deregister on REST Server.
             try
             {
-                return 1; // success
+                if (_endPointsByFile.ContainsKey(fileName))
+                {
+                    _endPointsByFile.TryGetValue(fileName, out var peers);
+                    if (peers?.Contains(peer) == true)
+                    {
+                        peers.Remove(peer);
+                        if (peers.Count == 0)
+                        {
+                            _endPointsByFile.Remove(fileName);
+                        }
+                        return 1; // 1 = successfully removed
+                    }
+                }
+
+                return 0; // nothing to delete.
+
             }
-            catch
+            catch (Exception e)
             {
-                return -1; // error
+                Console.WriteLine(e);
+                return -1; // -1 = error
             }
         }
     }

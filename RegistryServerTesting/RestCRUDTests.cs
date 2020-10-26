@@ -29,7 +29,6 @@ namespace RegistryServerTesting
             //Act  
             int actualCount = endPoints.Count;
 
-            //Assert
             Assert.AreEqual(expectedCount, actualCount);
         }
 
@@ -44,13 +43,21 @@ namespace RegistryServerTesting
             int expectedResult = 1;
             int actualResult = _manager.Register(fileName, peer);
 
-            // Assert
             Assert.AreEqual(expectedResult, actualResult);
         }
 
+        [TestMethod]
         public void DeregisterTest()
         {
-            Assert.Fail("Test not made.");
+            // Arrange
+            string fileName = "testFile";
+            FileEndPoint peer = new FileEndPoint("126.5.235.50", 4340);
+
+            // Act
+            int expectedResult = 1;
+            int actualResult = _manager.Deregister(fileName, peer);
+
+            Assert.AreEqual(expectedResult, actualResult);
         }
     }
 }

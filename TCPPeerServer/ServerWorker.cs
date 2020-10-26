@@ -23,7 +23,8 @@ namespace TCPPeerServer
             DirectoryInfo dirInfo = new DirectoryInfo(@"F:\visual_studio_projects\repos\3_semester\PeerToPeerWithCentralServer\TCPPeerServer");
             _filesOnServer = FileManagement.GetAllFilesOnServer($"{dirInfo}\\PeerServerFiles\\{portNo}");
             string serverIPAddress = server.LocalEndpoint.ToString().Split(":").First();
-            Task.Run(() => RegistryCommunication.ServerStartup(_filesOnServer, new FileEndPoint(serverIPAddress, portNo)));
+            FileEndPoint thisPeer = new FileEndPoint(serverIPAddress, portNo);
+            Task.Run(() => RegistryCommunication.ServerStartup(_filesOnServer, thisPeer));
 
             server.Start();
             LogMessage("Server ready", portNo);
@@ -31,11 +32,11 @@ namespace TCPPeerServer
             {
                 TcpClient tempSocket = server.AcceptTcpClient();
                 LogMessage("Client connected", portNo);
-                Task.Run(() => HandleClient(tempSocket));
+                Task.Run(() => HandleClient(tempSocket, thisPeer));
             }
         }
 
-        private void HandleClient(TcpClient tempSocket)
+        private void HandleClient(TcpClient tempSocket, FileEndPoint thisPeer)
         {
             using NetworkStream ns = tempSocket.GetStream();
             StreamWriter sw = new StreamWriter(ns) { AutoFlush = true };
@@ -57,7 +58,12 @@ namespace TCPPeerServer
                         sw.WriteLine($"{file}");
                         break;
                     case ClientRequest.UploadFile:
-                        // TODO: Upload/Register file
+                        string newFileName = sr.ReadLine();
+                        // TODO: Maybe add file creation here... 
+                        // FileManagement.CreateFile(fileName) or something :thinking:
+                        _filesOnServer.Add(newFileName); // only adds the name of the file, since there is no file.
+                        Task.Run(() => RegistryCommunication.RegisterFileAsync(newFileName, thisPeer));
+                        
                         break;
                     case ClientRequest.List:
                         _filesOnServer.ForEach(x => sw.WriteLine(Path.GetFileName(x)));
@@ -72,7 +78,7 @@ namespace TCPPeerServer
             {
                 sw.WriteLine("Request failed.");
                 Console.WriteLine($"Error thrown. Message: {e.Message}");
-                HandleClient(tempSocket);
+                HandleClient(tempSocket, thisPeer);
             }
         }
 
