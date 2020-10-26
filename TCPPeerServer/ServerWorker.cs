@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using PeerToPeerLib;
 
 namespace TCPPeerServer
 {
@@ -20,7 +22,8 @@ namespace TCPPeerServer
             TcpListener server = new TcpListener(IPAddress.Loopback, portNo);
             DirectoryInfo dirInfo = new DirectoryInfo(@"F:\visual_studio_projects\repos\3_semester\PeerToPeerWithCentralServer\TCPPeerServer");
             _filesOnServer = FileManagement.GetAllFilesOnServer($"{dirInfo}\\PeerServerFiles\\{portNo}");
-            RegistryCommunication.ServerStartup(_filesOnServer);
+            string serverIPAddress = server.LocalEndpoint.ToString().Split(":").First();
+            Task.Run(() => RegistryCommunication.ServerStartup(_filesOnServer, new FileEndPoint(serverIPAddress, portNo)));
 
             server.Start();
             LogMessage("Server ready", portNo);
