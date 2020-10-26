@@ -85,7 +85,7 @@ namespace RegistryServerREST.Manager
                 if (_endPointsByFile.ContainsKey(fileName))
                 {
                     _endPointsByFile.TryGetValue(fileName, out var peers);
-                    if (peers?.Contains(peer) == true)
+                    if (peers?.Contains(peer) == true) // this line might be causing issues?
                     {
                         peers.Remove(peer);
                         if (peers.Count == 0)

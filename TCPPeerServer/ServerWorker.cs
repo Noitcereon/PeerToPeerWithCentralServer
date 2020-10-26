@@ -34,7 +34,6 @@ namespace TCPPeerServer
                 TcpClient tempSocket = server.AcceptTcpClient();
                 SimpleLog.LogMessage("Client connected", portNo);
                 Task.Run(() => HandleClient(tempSocket, thisPeer));
-                SimpleLog.LogMessage("Client disconnected");
             }
         }
 
@@ -46,7 +45,7 @@ namespace TCPPeerServer
             try
             {
                 sw.WriteLine("Commands: GetFile, UploadFile, List");
-                ClientRequest clientRequest = (ClientRequest)Enum.Parse(typeof(ClientRequest), sr.ReadLine());
+                ClientRequest clientRequest = (ClientRequest) Enum.Parse(typeof(ClientRequest), sr.ReadLine());
 
                 switch (clientRequest)
                 {
@@ -55,9 +54,8 @@ namespace TCPPeerServer
                         string fileName = sr.ReadLine();
 
                         string file = FileManagement.GetFile(fileName, _filesOnServer);
-                        SimpleLog.LogMessage($"GetFile({fileName}) called");
-
                         sw.WriteLine($"{file}");
+                        SimpleLog.LogMessage($"GetFile({fileName}) requested");
                         break;
                     case ClientRequest.UploadFile:
                         string newFileName = sr.ReadLine();
@@ -65,15 +63,19 @@ namespace TCPPeerServer
                         // FileManagement.CreateFile(fileName) or something :thinking:
                         _filesOnServer.Add(newFileName); // only adds the name of the file, since there is no file.
                         Task.Run(() => RegistryCommunication.RegisterFileAsync(newFileName, thisPeer));
+                        SimpleLog.LogMessage("Uploaded new file to registry (simulated)");
+
                         break;
                     case ClientRequest.List:
                         _filesOnServer.ForEach(x => sw.WriteLine(Path.GetFileName(x)));
+                        SimpleLog.LogMessage("List requested");
                         break;
 
                     default:
                         sw.WriteLine("Request not understood by server");
                         break;
                 }
+                SimpleLog.LogMessage("Client disconnected");
             }
             catch (Exception e)
             {
